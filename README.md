@@ -14,8 +14,8 @@ metadata:
     openshift.io/generated-by: OpenShiftNewApp
   creationTimestamp: null
   labels:
-    app: dfile-test
-  name: dfile-test
+    app: dockerfile-example
+  name: dockerfile-example
 ```
 
 The following BuildConfig object is suitable for manual CLI builds. 
@@ -26,26 +26,22 @@ apiVersion: build.openshift.io/v1
 kind: BuildConfig
 metadata:
   labels:
-    app: dfile-test
-  name: dfile-test
+    app: dockerfile-example
+  name: dockerfile-example
 spec:
   source: 
     binary: {}
   output:
     to:
       kind: ImageStreamTag
-      name: dfile-test:latest
+      name: dockerfile-example:latest
   strategy:
-    dockerStrategy:
-      from:
-        kind: DockerImage
-        name: nginx:mainline-alpine
-    type: Docker
+    dockerStrategy: {}
 ```
 
 It supports 
 ```bash
-oc start-build dfile-test --from-dir=./ -F
+oc start-build dockerfile-example --from-dir=./ -F
 ```
 
 command. This will upload current directory to the build server and commence

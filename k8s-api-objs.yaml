@@ -23,8 +23,4 @@ spec:
       kind: ImageStreamTag
       name: dockerfile-example:latest
   strategy:
-    dockerStrategy:
-      from:
-        kind: DockerImage
-        name: nginx:mainline-alpine
-    type: Docker
+    dockerStrategy: {}
