@@ -1,0 +1,30 @@
+---
+apiVersion: image.openshift.io/v1
+kind: ImageStream
+metadata:
+  annotations:
+    openshift.io/generated-by: OpenShiftNewApp
+  creationTimestamp: null
+  labels:
+    app: dockerfile-example
+  name: dockerfile-example
+---
+apiVersion: build.openshift.io/v1
+kind: BuildConfig
+metadata:
+  labels:
+    app: dockerfile-example
+  name: dockerfile-example
+spec:
+  source: 
+    binary: {}
+  output:
+    to:
+      kind: ImageStreamTag
+      name: dockerfile-example:latest
+  strategy:
+    dockerStrategy:
+      from:
+        kind: DockerImage
+        name: nginx:mainline-alpine
+    type: Docker
