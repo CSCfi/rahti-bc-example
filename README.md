@@ -47,3 +47,11 @@ oc start-build dockerfile-example --from-dir=./ -F
 command. This will upload current directory to the build server and commence
 a container image build according to the `Dockerfile` file.
 
+## Quick start
+
+```
+# oc login ..
+# oc project ...
+oc new-build  https://github.com/CSCfi/rahti-bc-example.git
+```
+
