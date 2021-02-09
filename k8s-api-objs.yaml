@@ -24,3 +24,65 @@ spec:
       name: dockerfile-example:latest
   strategy:
     dockerStrategy: {}
+---
+apiVersion: v1
+kind: DeploymentConfig
+metadata:
+  name: dockerfile-example
+  labels:
+    app: dockerfile-example
+spec:
+  template: 
+    metadata:
+      labels:
+        name: dockerfile-example
+    spec:
+      containers:
+        - name: dockerfile-example
+          image: dockerfile-example
+          ports:
+            - containerPort: 8080
+  replicas: 1 
+  triggers:
+    - type: ConfigChange 
+    - type: ImageChange
+      imageChangeParams:
+        automatic: true
+        containerNames:
+          - dockerfile-example
+        from:
+          kind: ImageStreamTag
+          name: dockerfile-example:latest
+  strategy: 
+    type: Rolling
+  paused: false 
+  revisionHistoryLimit: 5 
+  minReadySeconds: 0
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: dockerfile-example
+    application: dockerfile-example
+  name: dockerfile-example
+spec:
+  ports:
+  - port: 8080
+    protocol: TCP
+    targetPort: 8080
+  selector:
+    deploymentconfig: dockerfile-example
+---
+apiVersion: v1
+kind: Route
+metadata:
+  labels:
+    app: dockerfile-example
+    application: dockerfile-example
+  name: dockerfile-example
+spec:
+  to:
+    kind: Service
+    name: dockerfile-example
+    weight: 100 
