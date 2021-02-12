@@ -49,9 +49,12 @@ a container image build according to the `Dockerfile` file.
 
 ## Quick start
 
+Login, select the correct project, create the build and image objects, and start the build of the local Dockerfile.
+
 ```
 # oc login ..
 # oc project ...
-oc new-build  https://github.com/CSCfi/rahti-bc-example.git
+oc create -f k8s-api-objs.yaml
+oc start-build dockerfile-example --from-dir=./ -F
 ```
 
